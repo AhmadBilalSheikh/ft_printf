@@ -6,12 +6,12 @@
 /*   By: ahbilal <ahbilal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 17:00:49 by ahbilal           #+#    #+#             */
-/*   Updated: 2025/09/03 19:10:59 by ahbilal          ###   ########.fr       */
+/*   Updated: 2025/09/04 16:11:26 by ahbilal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-//handle the count for negative
+
 static int	add_char_count(int c, int *count)
 {
 	int	temp;

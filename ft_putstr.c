@@ -6,7 +6,7 @@
 /*   By: ahbilal <ahbilal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:57:20 by ahbilal           #+#    #+#             */
-/*   Updated: 2025/09/03 19:26:38 by ahbilal          ###   ########.fr       */
+/*   Updated: 2025/09/04 16:21:08 by ahbilal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,3 @@ int	ft_putstr(char *s)
 	}
 	return (count);
 }
-// #include "ft_printf.h"
-
-// static int	putstr_base(char *s)
-// {
-// 	int	count;
-// 	int	temp;
-
-// 	count = 0;
-// 	while (*s)
-// 	{
-// 		temp = ft_putchar(*s);
-// 		if (temp < 0)
-// 			return (-1);
-// 		count += temp;
-// 		s++;
-// 	}
-// 	return (count);
-// }
-
-// int	ft_putstr(void *data, int type)
-// {
-// 	if (type == STRING_TYPE)
-// 	{
-// 		if (!data)
-// 			return (putstr_base("(null)"));
-// 		return (putstr_base((char *)data));
-// 	}
-// 	return (0);
-// }
