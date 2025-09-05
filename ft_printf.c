@@ -6,13 +6,13 @@
 /*   By: ahbilal <ahbilal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:40:58 by ahbilal           #+#    #+#             */
-/*   Updated: 2025/09/04 21:38:58 by ahbilal          ###   ########.fr       */
+/*   Updated: 2025/09/05 01:29:32 by ahbilal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	handle_format(char spec, va_list args)
+static int	handle_spec(char spec, va_list args)
 {
 	if (spec == 'c')
 		return (ft_putchar(va_arg(args, int)));
@@ -38,13 +38,13 @@ static int	process_format(const char *format, int *i, va_list args)
 	int	temp;
 
 	(*i)++;
-	temp = handle_format(format[*i], args);
+	temp = handle_spec(format[*i], args);
 	if (temp < 0)
 		return (-1);
 	return (temp);
 }
 
-static int	process_char(char c)
+static int	print(char c)
 {
 	int	temp;
 
@@ -54,99 +54,129 @@ static int	process_char(char c)
 	return (temp);
 }
 
-int	ft_printf(const char *format, ...)
+int	ft_printf(const char *input, ...)
 {
 	va_list	args;
 	int		i;
-	int		printed;
+	int		count;
 	int		temp;
 
-	va_start(args, format);
+	va_start(args, input);
 	i = 0;
-	printed = 0;
-	while (format[i])
+	count = 0;
+	while (input[i])
 	{
-		if (format[i] == '%' && format[i + 1])
-			temp = process_format(format, &i, args);
+		if (input[i] == '%' && input[i + 1])
+			temp = process_format(input, &i, args);
 		else
-			temp = process_char(format[i]);
+			temp = print(input[i]);
 		if (temp < 0)
 			return (va_end(args), -1);
-		printed += temp;
+		count += temp;
 		i++;
 	}
 	va_end(args);
-	return (printed);
+	return (count);
 }
-// #include "ft_printf.h"
 // #include <stdio.h>
 // #include <limits.h>
+// #include <unistd.h>
+// #include <stdlib.h>
 
 // int main(void)
 // {
 //     int ret1, ret2;
+//     void *null_ptr = NULL;
+//     char *null_str = NULL;
 
-//     // ----------------------
-//     // Test %c
-//     // ----------------------
-//     printf("=== Test %%c ===\n");
-//     ret1 = printf("Original: %c\n", 'A');
-//     ret2 = ft_printf("Mine    : %c\n", 'A');
-//     printf("Return values: original=%d mine=%d\n\n", ret1, ret2);
+//     printf("----- [CHAR] %%c -----\n");
+//     ret1 = printf("printf   : [%c]\n", 'A');
+//     ret2 = ft_printf("ft_printf: [%c]\n", 'A');
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
 
-//     // ----------------------
-//     // Test %s
-//     // ----------------------
-//     printf("=== Test %%s ===\n");
-//     ret1 = printf("Original: %s\n", "Hello, world!");
-//     ret2 = ft_printf("Mine    : %s\n", "Hello, world!");
-//     printf("Return values: original=%d mine=%d\n", ret1, ret2);
+//     printf("----- [STRING] %%s -----\n");
+//     ret1 = printf("printf   : [%s]\n", "Hello, world!");
+//     ret2 = ft_printf("ft_printf: [%s]\n", "Hello, world!");
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
 
-//     // NULL string
-//     ret1 = printf("Original NULL: %s\n", NULL);
-//     ret2 = ft_printf("Mine NULL    : %s\n", NULL);
-//     printf("Return values: original=%d mine=%d\n\n", ret1, ret2);
+//     printf("----- [NULL STRING] %%s -----\n");
+//     ret1 = printf("printf   : [%s]\n", NULL);
+//     ret2 = ft_printf("ft_printf: [%s]\n", NULL);
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
 
-//     // ----------------------
-//     // Test %d / %i
-//     // ----------------------
-//     printf("=== Test %%d / %%i ===\n");
-//     ret1 = printf("Original: %d %i %d %i\n", 42, -42, INT_MAX, INT_MIN);
-//     ret2 = ft_printf("Mine    : %d %i %d %i\n", 42, -42, INT_MAX, INT_MIN);
-//     printf("Return values: original=%d mine=%d\n\n", ret1, ret2);
+//     printf("----- [EMPTY STRING] %%s -----\n");
+//     ret1 = printf("printf   : [%s]\n", "");
+//     ret2 = ft_printf("ft_printf: [%s]\n", "");
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
 
-//     // ----------------------
-//     // Test %u
-//     // ----------------------
-//     printf("=== Test %%u ===\n");
-//     ret1 = printf("Original: %u %u\n", 0, UINT_MAX);
-//     ret2 = ft_printf("Mine    : %u %u\n", 0, UINT_MAX);
-//     printf("Return values: original=%d mine=%d\n\n", ret1, ret2);
+//     printf("----- [POINTER] %%p -----\n");
+//     ret1 = printf("printf   : [%p]\n", (void*)&ret1);
+//     ret2 = ft_printf("ft_printf: [%p]\n", (void*)&ret1);
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
 
-//     // ----------------------
-//     // Test %x / %X
-//     // ----------------------
-//     printf("=== Test %%x / %%X ===\n");
-//     ret1 = printf("Original: %x %X %x %X\n", 255, 255, 0, UINT_MAX);
-//     ret2 = ft_printf("Mine    : %x %X %x %X\n", 255, 255, 0, UINT_MAX);
-//     printf("Return values: original=%d mine=%d\n\n", ret1, ret2);
+//     printf("----- [NULL POINTER] %%p -----\n");
+//     ret1 = printf("printf   : [%p]\n", null_ptr);
+//     ret2 = ft_printf("ft_printf: [%p]\n", null_ptr);
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
 
-//     // ----------------------
-//     // Test %p
-//     // ----------------------
-//     printf("=== Test %%p ===\n");
-//     int x = 42;
-//     ret1 = printf("Original: %p %p %p\n", &x, NULL, (void *)ULONG_MAX);
-//     ret2 = ft_printf("Mine    : %p %p %p\n", &x, NULL, (void *)ULONG_MAX);
-//     printf("Return values: original=%d mine=%d\n\n", ret1, ret2);
+//     printf("----- [DECIMAL] %%d -----\n");
+//     ret1 = printf("printf   : [%d]\n", 12345);
+//     ret2 = ft_printf("ft_printf: [%d]\n", 12345);
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
 
-//     // ----------------------
-//     // Test %%
-//     // ----------------------
-//     printf("=== Test %% ===\n");
-//     ret1 = printf("Original: %% %% %%\n");
-//     ret2 = ft_printf("Mine    : %% %% %%\n");
-//     printf("Return values: original=%d mine=%d\n\n", ret1, ret2);
+//     printf("----- [DECIMAL NEGATIVE] %%d -----\n");
+//     ret1 = printf("printf   : [%d]\n", -12345);
+//     ret2 = ft_printf("ft_printf: [%d]\n", -12345);
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
+
+//     printf("----- [INT MIN/MAX] %%d -----\n");
+//     ret1 = printf("printf   : [INT_MIN = %d | INT_MAX = %d]\n",
+//     INT_MIN, INT_MAX);
+//     ret2 = ft_printf("ft_printf: [INT_MIN = %d | INT_MAX = %d]\n",
+//     INT_MIN, INT_MAX);
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
+
+//     printf("----- [INTEGER] %%i -----\n");
+//     ret1 = printf("printf   : [%i]\n", 42);
+//     ret2 = ft_printf("ft_printf: [%i]\n", 42);
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
+
+//     printf("----- [UNSIGNED] %%u -----\n");
+//     ret1 = printf("printf   : [%u]\n", 1234567890);
+//     ret2 = ft_printf("ft_printf: [%u]\n", 1234567890);
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
+
+//     printf("----- [UNSIGNED MAX] %%u -----\n");
+//     ret1 = printf("printf   : [%u]\n", UINT_MAX);
+//     ret2 = ft_printf("ft_printf: [%u]\n", UINT_MAX);
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
+
+//     printf("----- [HEXADECIMAL LOWERCASE] %%x -----\n");
+//     ret1 = printf("printf   : [%x]\n", 3735928559U); // 0xDEADBEEF
+//     ret2 = ft_printf("ft_printf: [%x]\n", 3735928559U);
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
+
+//     printf("----- [HEXADECIMAL UPPERCASE] %%X -----\n");
+//     ret1 = printf("printf   : [%X]\n", 3735928559U);
+//     ret2 = ft_printf("ft_printf: [%X]\n", 3735928559U);
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
+
+//     printf("----- [ZERO VALUE] %%d %%u %%x %%p -----\n");
+//     ret1 = printf("printf   : %d | %u | %x | %p\n", 0, 0, 0, (void*)0);
+//     ret2 = ft_printf("ft_printf: %d | %u | %x | %p\n", 0, 0, 0, (void*)0);
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
+
+//     printf("----- [PERCENT SIGN] %% -----\n");
+//     ret1 = printf("printf   : [%%]\n");
+//     ret2 = ft_printf("ft_printf: [%%]\n");
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
+
+//     printf("----- [MIXED FORMAT STRING] -----\n");
+//     ret1 = printf("printf   : [%c] [%s] [%d] [%u] [%x] [%%]\n", 'Z', 
+//     "abc", -42, 42, 255);
+//     ret2 = ft_printf("ft_printf: [%c] [%s] [%d] [%u] [%x] [%%]\n", 'Z',
+//     "abc", -42, 42, 255);
+//     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
 
 //     return 0;
 // }
