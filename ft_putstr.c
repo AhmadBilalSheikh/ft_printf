@@ -6,7 +6,7 @@
 /*   By: ahbilal <ahbilal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:57:20 by ahbilal           #+#    #+#             */
-/*   Updated: 2025/09/04 16:21:08 by ahbilal          ###   ########.fr       */
+/*   Updated: 2025/09/05 13:40:52 by ahbilal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_putstr(char *s)
 	int	temp;
 
 	if (!s)
-		return (write(1, "(null)", 6));
+		s = "(null)";
 	count = 0;
 	i = 0;
 	while (s[i])

@@ -6,13 +6,13 @@
 /*   By: ahbilal <ahbilal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 17:01:54 by ahbilal           #+#    #+#             */
-/*   Updated: 2025/09/04 21:35:45 by ahbilal          ###   ########.fr       */
+/*   Updated: 2025/09/05 15:28:14 by ahbilal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_putptr_rec(unsigned long n)
+static int	ft_putptr_rec(uintptr_t n)
 {
 	int		count;
 	int		temp;
@@ -34,14 +34,14 @@ static int	ft_putptr_rec(unsigned long n)
 
 int	ft_putptr(void *ptr)
 {
-	unsigned long	addr;
+	uintptr_t		addr;
 	int				count;
 	int				temp;
 
 	if (ptr == NULL)
 		return (ft_putstr(NULL_PTR));
-	addr = (unsigned long)ptr;
-	count = write(1, "0x", 2);
+	addr = (uintptr_t)ptr;
+	count = ft_putstr("0x");
 	if (count < 0)
 		return (-1);
 	temp = ft_putptr_rec(addr);
