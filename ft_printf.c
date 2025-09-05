@@ -6,7 +6,7 @@
 /*   By: ahbilal <ahbilal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:40:58 by ahbilal           #+#    #+#             */
-/*   Updated: 2025/09/05 15:51:31 by ahbilal          ###   ########.fr       */
+/*   Updated: 2025/09/05 19:37:49 by ahbilal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,27 +177,6 @@ int	ft_printf(const char *input, ...)
 //     ret2 = ft_printf("ft_printf: [%c] [%s] [%d] [%u] [%x] [%%]\n", 'Z',
 //     "abc", -42, 42, 255);
 //     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
-
-//     return 0;
-// }
-// #include <stdio.h>
-
-// int main()
-// {
-//     const char *format = "Number: %d! Next char.\n";
-//     int val = 42;
-//     int std_ret, ft_ret;
-
-//     std_ret = printf(format, val);
-//     ft_ret = ft_printf(format, val);
-
-//     printf("Standard printf returned: %d\n", std_ret);
-//     printf("ft_printf returned      : %d\n", ft_ret);
-
-//     if (std_ret != ft_ret)
-//         printf("Return values differ! There might be a bug.\n");
-//     else
-//         printf("Return values match.\n");
 
 //     return 0;
 // }
