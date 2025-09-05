@@ -6,7 +6,7 @@
 /*   By: ahbilal <ahbilal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:40:58 by ahbilal           #+#    #+#             */
-/*   Updated: 2025/09/05 01:29:32 by ahbilal          ###   ########.fr       */
+/*   Updated: 2025/09/05 03:30:46 by ahbilal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ static int	handle_spec(char spec, va_list args)
 	return (0);
 }
 
-static int	process_format(const char *format, int *i, va_list args)
+static int	process_spec(const char *input, int *i, va_list args)
 {
 	int	temp;
 
 	(*i)++;
-	temp = handle_spec(format[*i], args);
+	temp = handle_spec(input[*i], args);
 	if (temp < 0)
 		return (-1);
 	return (temp);
@@ -67,7 +67,7 @@ int	ft_printf(const char *input, ...)
 	while (input[i])
 	{
 		if (input[i] == '%' && input[i + 1])
-			temp = process_format(input, &i, args);
+			temp = process_spec(input, &i, args);
 		else
 			temp = print(input[i]);
 		if (temp < 0)
@@ -100,8 +100,8 @@ int	ft_printf(const char *input, ...)
 //     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
 
 //     printf("----- [NULL STRING] %%s -----\n");
-//     ret1 = printf("printf   : [%s]\n", NULL);
-//     ret2 = ft_printf("ft_printf: [%s]\n", NULL);
+//     ret1 = printf("printf   : [%s]\n", null_str);
+//     ret2 = ft_printf("ft_printf: [%s]\n", null_str);
 //     printf("Returns  : printf = %d, ft_printf = %d\n\n", ret1, ret2);
 
 //     printf("----- [EMPTY STRING] %%s -----\n");
